@@ -7,3 +7,7 @@
 - **Jugar desde ordenadores distinos**
 - **Crear la interfaz grafica del usuario**
 - **Guardar recuento de partidas y resultados**
+
+# PROTOTIPO
+## INTERFAZ INICIO
+![DEQC](CamelRace.png)
