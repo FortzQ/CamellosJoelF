@@ -1,0 +1,25 @@
+@startuml
+
+node "Cliente" {
+  component CarreraCamellos
+}
+
+node "Servidor" {
+  component ServidorDelJuego
+}
+
+node "Servicio PDF" {
+    ' docker es quien genera los pdfs
+  component docker 
+}
+
+node "Almacenamiento" {
+    ' sqlite es la base de datos que se ejecuta (mas dificil)// fichero tambien guarda el historial (facil)
+  database Fichero
+}
+
+CarreraCamellos -- ServidorDelJuego : TCP
+ServidorDelJuego -- docker : HTTP/REST
+ServidorDelJuego -- Fichero : SQL / ORM?
+
+@enduml
