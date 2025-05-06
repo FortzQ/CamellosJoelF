@@ -22,12 +22,5 @@
 
 
 ## Diagrama de Actividad del Juego
-![alt text](image.png)
+![alt text](DiaAct.png)
 
-## Lógica del juego (????)
-
-**- El movimiento de los camellos es controlado por el sistema, sin intervención de los jugadores.**
-**- Cada camello avanza de forma aleatoria en intervalos de tiempo regulares.**
-**- Se comprueba continuamente si algún camello ha alcanzado la meta.**
-**- El primer camello que cruce la meta es declarado ganador.**
-**- El sistema bloquea el avance al detectar un ganador y muestra el resultado.**
