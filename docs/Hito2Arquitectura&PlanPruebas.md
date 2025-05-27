@@ -1,13 +1,15 @@
 # **HITO 2**
-## **ARQUITECTURA  Y DISEÑo**
+## **ARQUITECTURA  Y DISEÑO**
 - **En primer lugar, he identificado los sistemas del juego y a lo que se conectan:** 
-1. **Sistema Cliente ->Muestra la interfaz grafica, permite a este registrarse, y ver el resultado de la carrera -> Se conecta al servidor.<br>**
+1. **Sistema Cliente -> Permite a este registrarse -> Se conecta al servidor.<br>**
 
-2. **Sistema Servidor ->Controla el avance de los camellos, detecta el ganador y envia los datos al cliente->Se conecta al cliente.<br>**
+2. **Sistema Servidor ->Se enctarga de todo el flujo de la aplicación, ejecuta la carrera y dicta el ganador.**
 
-3. **Generador de PDF->Genera el certificado al ganador de la carrera->Se activa desde el cliente cuando se gana.**
-4. **Historia del partidas->Guarda y muestra los resultados->Se conecta al cliente o servidor**
+3. **Generador de PDF->Genera el certificado al ganador de la carrera mediante Docker. Se conecta al servidor**
+4. **Historia del partidas->Guarda y muestra los resultados->Se conecta al servidor**
 
+## DIAGRAMA DE COMPONENTES 
+![alt text](image.png)
 
 ![f](Arquitectura.png)
 
@@ -22,7 +24,7 @@
 
 ## **PRUEBAS**
 
-- **Caso de uso - Ejemplo:**<br>
+- **Caso de uso  Ejemplo:**<br> poner texto nada mas 
 
 **ID | Procedimiento | Entrada | Salida**
 **01 | Registro de jugadores | "J1" y "J2" | Ambos registrados correctamente**

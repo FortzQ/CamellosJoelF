@@ -1,0 +1,42 @@
+@startuml
+' Diagrama de clases - Cliente
+
+class Jugador {
+    - nombre: String
+    - camello: Camello
+    - ganador: boolean
+    - avancesExtra: int
+    + getNombre(): String
+    + getCamello(): Camello
+    + esGanador(): boolean
+    + getAvancesExtra(): int
+}
+
+class Camello {
+    - id: int
+    - posicion: int
+    + getId(): int
+    + getPosicion(): int
+    + avanzar(pasos: int): void
+}
+
+class InterfazGrafica {
+    + mostrarRegistro(): void
+    + mostrarCarrera(): void
+    + mostrarGanador(jugador: Jugador): void
+    + imprimirCertificado(jugador: Jugador): void
+}
+
+class ControladorCliente {
+    - jugador: Jugador
+    - interfaz: InterfazGrafica
+    + registrarJugador(nombre: String): void
+    + iniciarCarrera(): void
+    + notificarGanador(jugador: Jugador): void
+}
+
+Jugador "1" -- "1" Camello : tiene >
+ControladorCliente "1" -- "1" InterfazGrafica : usa >
+ControladorCliente "1" -- "1" Jugador : controla >
+
+@enduml

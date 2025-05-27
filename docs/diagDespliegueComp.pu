@@ -1,0 +1,22 @@
+@startuml
+
+node "Cliente" {
+  component CarreraCamellos <<java>>
+}
+
+node "Servidor" {
+  component ServidorDelJuego <<java>>
+  component FicheroTxt <<fichero Texto>>
+
+}
+
+node "Servicio PDF" {
+    ' docker es quien genera los pdfs
+  component MarkdowntoPDF <<docker>>
+ 
+}
+
+CarreraCamellos -- ServidorDelJuego : Puerto TCP
+ServidorDelJuego -- MarkdowntoPDF : HTTP/REST
+ServidorDelJuego -- FicheroTxt
+@enduml
