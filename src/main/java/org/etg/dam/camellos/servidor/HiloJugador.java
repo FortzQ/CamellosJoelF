@@ -25,45 +25,32 @@ public class HiloJugador implements Runnable {
             entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             salida = new PrintWriter(socket.getOutputStream(), true);
 
-            // Recibe el nombre del jugador
             String nombre = entrada.readLine();
             jugador = new Jugador(nombre, socket);
             carrera.agregarJugador(jugador);
-
             salida.println("Esperando a otro jugador...");
-
-            // Espera activa a que estén los dos jugadores conectados
-            while (!carrera.estaLlena()) {
-                Thread.sleep(100);
-            }
-
+            while (!carrera.estaLlena()) Thread.sleep(100);
             salida.println("¡Comienza la carrera!");
 
-            while (!carrera.hayGanador()) {
-                // Avanza jugador y comprueba si ha ganado
-                Jugador posibleGanador = carrera.avanzarJugador(jugador.getNombre());
-
-                // Envia estado actual al jugador
-                Jugador[] todos = carrera.getJugadores();
-                salida.println("POSICIONES:");
-                for (Jugador j : todos) {
-                    salida.println(j.getNombre() + ": " + j.getPosicion());
-                }
-                salida.println("---");
-
-                if (posibleGanador != null && posibleGanador == jugador) {
-                    salida.println("¡HAS GANADO!");
-                }
-
-                Thread.sleep(1000); // simula tiempo entre turnos
-            }
-
-            if (carrera.getGanador() != jugador) {
-                salida.println("Has perdido.");
-            }
-
         } catch (Exception e) {
-            System.err.println("Error con jugador: " + e.getMessage());
+            System.err.println("Error en hilo jugador: " + e.getMessage());
+        }
+    }
+
+    public void enviarEstado() {
+        Jugador[] jugadores = carrera.getJugadores();
+        salida.println("POSICIONES:");
+        for (Jugador j : jugadores) {
+            salida.println(j.getNombre() + ": " + j.getPosicion());
+        }
+        salida.println("---");
+    }
+
+    public void enviarResultado(Jugador ganador) {
+        if (jugador.getNombre().equals(ganador.getNombre())) {
+            salida.println("¡HAS GANADO!");
+        } else {
+            salida.println("Has perdido.");
         }
     }
 }

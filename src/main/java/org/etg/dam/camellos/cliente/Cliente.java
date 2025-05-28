@@ -1,30 +1,50 @@
 package main.java.org.etg.dam.camellos.cliente;
 
+import javax.swing.*;
+
+import main.java.org.etg.dam.camellos.util.GeneradorCertificado;
+
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Cliente {
-    private static final String HOST = "localhost"; // o la IP del servidor
+    private static final String HOST = "localhost";
     private static final int PUERTO = 8888;
 
     public static void main(String[] args) {
+        String nombre = JOptionPane.showInputDialog("Tu nombre:");
+        if (nombre == null || nombre.isBlank()) return;
+
         try (Socket socket = new Socket(HOST, PUERTO);
-             PrintWriter salida = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             Scanner scanner = new Scanner(System.in)) {
+             PrintWriter salida = new PrintWriter(socket.getOutputStream(), true)) {
 
-            System.out.print("Introduce tu nombre: ");
-            String nombre = scanner.nextLine();
             salida.println(nombre);
+            VistaJuego gui = new VistaJuego(nombre);
 
-            String mensaje;
-            while ((mensaje = entrada.readLine()) != null) {
-                System.out.println(mensaje);
+            while (true) {
+                String linea = entrada.readLine();
+                if (linea == null) break;
+
+                switch (linea) {
+                    case "POSICIONES:" -> {
+                        String linea1 = entrada.readLine();
+                        String linea2 = entrada.readLine();
+                        entrada.readLine(); // "---"
+
+                        gui.actualizarEstado(linea1, linea2);
+                    }
+                    case "¡HAS GANADO!" ->{
+                        gui.mostrarResultado("¡Has ganado!");
+                        GeneradorCertificado.generar(nombre);
+                    }
+                    case "Has perdido." -> gui.mostrarResultado("Has perdido.");
+                    default -> gui.añadirLog(linea);
+                }
             }
 
         } catch (IOException e) {
-            System.err.println("Error al conectar con el servidor: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
 }
